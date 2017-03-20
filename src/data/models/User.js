@@ -19,13 +19,20 @@ const User = Model.define('User', {
   },
 
   email: {
-    type: DataType.STRING(255),
-    validate: { isEmail: true },
+    type: DataType.STRING,
+    unique: true,
+    validate: {
+      isEmail: true,
+    },
   },
 
   emailConfirmed: {
     type: DataType.BOOLEAN,
     defaultValue: false,
+  },
+
+  hash: {
+    type: DataType.STRING,
   },
 
 }, {

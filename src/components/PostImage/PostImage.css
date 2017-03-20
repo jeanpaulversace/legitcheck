@@ -1,0 +1,12 @@
+.imgWrap {
+  position: relative;
+}
+
+.imgWrap .close {
+  font-size: xlarge;
+  color: #ff5722;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 100;
+}

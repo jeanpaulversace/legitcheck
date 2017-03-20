@@ -13,7 +13,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
-import expressGraphQL from 'express-graphql';
+// import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -25,7 +25,7 @@ import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import passport from './core/passport';
 import models from './data/models';
-import schema from './data/schema';
+// import schema from './data/schema';
 import routes from './routes';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
@@ -60,6 +60,34 @@ app.use(passport.initialize());
 if (process.env.NODE_ENV !== 'production') {
   app.enable('trust proxy');
 }
+
+// Local Log in / Sign up routes
+// app.post('/login',
+//   passport.authenticate('local', { failureRedirect: '/login', session: false }),
+//   (req, res) => {
+//     const expiresIn = 60 * 60 * 24 * 180; // 180 days
+//     const token = jwt.sign(req.user, auth.jwt.secret, { expiresIn });
+//     res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+//     res.redirect('/');
+//   },
+// );
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err) { return next(err); }
+    if (info) {
+      const errorString = encodeURIComponent(info.message);
+      return res.redirect(`/login?error=${errorString}`);
+    }
+    if (!user) { res.redirect('/login'); }
+    const expiresIn = 60 * 60 * 24 * 180; // 180 days
+    const token = jwt.sign(user, auth.jwt.secret, { expiresIn });
+    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+    console.log('Successful login, redirecting to home!');
+    res.redirect('/');
+  })(req, res, next);
+});
+
+// Facebook Log in / Sign up Routes
 app.get('/login/facebook',
   passport.authenticate('facebook', { scope: ['email', 'user_location'], session: false }),
 );
@@ -76,12 +104,12 @@ app.get('/login/facebook/return',
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use('/graphql', expressGraphQL(req => ({
-  schema,
-  graphiql: process.env.NODE_ENV !== 'production',
-  rootValue: { request: req },
-  pretty: process.env.NODE_ENV !== 'production',
-})));
+// app.use('/graphql', expressGraphQL(req => ({
+//   schema,
+//   graphiql: process.env.NODE_ENV !== 'production',
+//   rootValue: { request: req },
+//   pretty: process.env.NODE_ENV !== 'production',
+// })));
 
 //
 // Register server-side rendering middleware
@@ -99,12 +127,17 @@ app.get('*', async (req, res, next) => {
         // eslint-disable-next-line no-underscore-dangle
         styles.forEach(style => css.add(style._getCss()));
       },
+      user: req.user,
     };
 
-    const route = await UniversalRouter.resolve(routes, {
+    const routeContext = {
       path: req.path,
       query: req.query,
-    });
+    };
+
+    if (req.user) { routeContext.user = req.user; }
+
+    const route = await UniversalRouter.resolve(routes, routeContext);
 
     if (route.redirect) {
       res.redirect(route.status || 302, route.redirect);

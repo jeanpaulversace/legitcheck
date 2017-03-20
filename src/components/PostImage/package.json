@@ -1,0 +1,6 @@
+{
+  "name": "PostImage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PostImage.js"
+}

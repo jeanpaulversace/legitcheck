@@ -12,6 +12,11 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
+import Activity from './Activity';
+import Check from './Check';
+import Comment from './Comment';
+import Post from './Post';
+import Tag from './Tag';
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -34,9 +39,35 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
+Activity.belongsTo(User, {
+  as: 'fromUser',
+  foreignKey: 'fromUserId',
+});
+
+Activity.belongsTo(User, {
+  as: 'toUser',
+  foreignKey: 'toUserId',
+});
+//
+Activity.belongsTo(Post);
+
+Post.belongsTo(User);
+
+Post.hasMany(Comment);
+
+Post.hasMany(Check);
+
+Check.belongsTo(User);
+
+Comment.belongsTo(User);
+
+Tag.belongsToMany(Post, { through: 'PostTags' });
+Post.belongsToMany(Tag, { through: 'PostTags' });
+
+
 function sync(...args) {
   return sequelize.sync(...args);
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile };
+export { User, UserLogin, UserClaim, UserProfile, Activity, Check, Comment, Post, Tag };

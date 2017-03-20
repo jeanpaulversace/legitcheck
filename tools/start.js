@@ -74,6 +74,9 @@ async function start() {
         proxy: {
           target: server.host,
           middleware: [wpMiddleware, hotMiddleware],
+          cookies: {
+            stripDomain: false,
+          },
           proxyOptions: {
             xfwd: true,
           },

@@ -11,16 +11,24 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Login from './Login';
 
-const title = 'Log In';
+const title = 'Login / Register';
 
 export default {
 
   path: '/login',
 
-  action() {
+  action({ query }) {
+    let error = '';
+    switch (query.error) {
+      case 'wrong password':
+        error = 'You have entered an incorrect password. Please try again.';
+        break;
+      default:
+        error = '';
+    }
     return {
       title,
-      component: <Layout><Login title={title} /></Layout>,
+      component: <Layout><Login title={title} error={error} /></Layout>,
     };
   },
 

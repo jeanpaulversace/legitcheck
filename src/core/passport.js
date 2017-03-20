@@ -14,9 +14,98 @@
  */
 
 import passport from 'passport';
+import bcrypt from 'bcrypt';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { User, UserLogin, UserClaim, UserProfile } from '../data/models';
 import { auth as config } from '../config';
+
+/**
+ * Sign in with Local.
+ */
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+},
+  (username, password, done) => {
+    const fizzBuzz = async () => {
+      const user = await User.findOne({
+        where: {
+          email: username,
+        },
+      });
+
+      // Log in User if correct password
+      if (user) {
+        console.log('Check if passwords match!');
+        bcrypt.compare(password, user.hash, (err, res) => {
+          if (res == true) {
+            console.log('User about to sign-in!');
+            done(null, {
+              id: user.id,
+              email: user.email,
+            });
+          } else {
+            console.log('Incorrect password!');
+            done(null, false, { message: 'wrong password' });
+          }
+        });
+
+       // Sign up User
+      } else {
+        const loginName = 'local';
+        bcrypt.hash(password, 10, (err, hash) => {
+          User.create({
+            email: username,
+            hash,
+            emailConfirmed: true,
+            logins: [
+              { name: loginName, key: username },
+            ],
+            claims: {},
+            profile: {},
+          }, {
+            include: [
+              { model: UserLogin, as: 'logins' },
+              { model: UserClaim, as: 'claims' },
+              { model: UserProfile, as: 'profile' },
+            ],
+          }).then((newUser) => {
+            done(null, {
+              id: newUser.id,
+              email: newUser.email,
+            });
+          });
+        });
+      }
+    };
+
+    fizzBuzz().catch(done);
+  },
+ ));
+
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findOne({
+    where: {
+      id,
+    },
+  }).then((user) => {
+    if (user == null) {
+      done(new Error('Wrong user id.'));
+    }
+
+    done(null, {
+      id: user.id,
+      email: user.email,
+    });
+  });
+});
+
 
 /**
  * Sign in with Facebook.

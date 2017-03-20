@@ -1,0 +1,6 @@
+{
+  "name": "PostProgressModal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PostProgressModal.js"
+}

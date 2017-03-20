@@ -8,10 +8,18 @@
  */
 
 import React, { PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../Link';
+
+import {
+  Nav,
+  NavItem,
+  NavDropdown,
+  MenuItem,
+} from 'react-bootstrap';
 
 class Navigation extends React.Component {
   static propTypes = {
@@ -19,17 +27,33 @@ class Navigation extends React.Component {
   };
 
   render() {
+    const LoggedInNavigation = () => (
+      <Nav pullRight>
+        <NavItem componentClass={Link} to="/post"><FontAwesome style={{ color: 'black' }} name="plus" /></NavItem>
+        <NavItem componentClass={Link} to="/activity"><FontAwesome style={{ color: 'black' }} name="bell" /></NavItem>
+        <NavItem componentClass={Link} eventKey={1} href="/login" to="/login"><FontAwesome style={{ color: 'black' }} name="user" /></NavItem>
+      </Nav>
+    );
+
+    const LoggedOutNavigation = () => (
+      <Nav pullRight>
+        <NavItem componentClass={Link} to="/about">About</NavItem>
+        <NavItem componentClass={Link} to="/contact">Contact</NavItem>
+        <NavItem componentClass={Link} href="/login" to="/login">Login / Register</NavItem>
+      </Nav>
+    );
+
+    // { this.context.user ? <LoggedInNavigation /> : <LoggedOutNavigation /> }
     return (
-      <div className={cx(s.root, this.props.className)} role="navigation">
-        <Link className={s.link} to="/about">About</Link>
-        <Link className={s.link} to="/contact">Contact</Link>
-        <span className={s.spacer}> | </span>
-        <Link className={s.link} to="/login">Log in</Link>
-        <span className={s.spacer}>or</span>
-        <Link className={cx(s.link, s.highlight)} to="/register">Sign up</Link>
+      <div>
+        <LoggedOutNavigation />
       </div>
     );
   }
 }
+
+Navigation.contextTypes = {
+  user: PropTypes.object,
+};
 
 export default withStyles(s)(Navigation);
