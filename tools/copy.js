@@ -29,15 +29,17 @@ async function copy() {
       },
     }, null, 2)),
     copyFile('LICENSE.txt', 'build/LICENSE.txt'),
+<<<<<<< HEAD
     copyDir('node_modules/bootstrap/dist/css', 'build/public/css'),
     copyDir('node_modules/bootstrap/dist/fonts', 'build/public/fonts'),
     copyDir('src/content', 'build/content'),
+=======
+>>>>>>> cdb874f970fb23eae8af0cbbbf1aa1ce85bdf5e6
     copyDir('public', 'build/public'),
   ]);
 
   if (process.argv.includes('--watch')) {
     const watcher = chokidar.watch([
-      'src/content/**/*',
       'public/**/*',
     ], { ignoreInitial: true });
 

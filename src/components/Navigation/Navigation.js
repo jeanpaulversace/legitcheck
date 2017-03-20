@@ -22,10 +22,6 @@ import {
 } from 'react-bootstrap';
 
 class Navigation extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  };
-
   render() {
     const LoggedInNavigation = () => (
       <Nav pullRight>
@@ -51,9 +47,5 @@ class Navigation extends React.Component {
     );
   }
 }
-
-Navigation.contextTypes = {
-  user: PropTypes.object,
-};
 
 export default withStyles(s)(Navigation);

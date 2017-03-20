@@ -13,7 +13,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
-// import expressGraphQL from 'express-graphql';
+import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -25,9 +25,11 @@ import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import passport from './core/passport';
 import models from './data/models';
-// import schema from './data/schema';
+import schema from './data/schema';
 import routes from './routes';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
+import configureStore from './store/configureStore';
+import { setRuntimeVariable } from './actions/runtime';
 import { port, auth } from './config';
 
 const app = express();
@@ -57,7 +59,7 @@ app.use(expressJwt({
 }));
 app.use(passport.initialize());
 
-if (process.env.NODE_ENV !== 'production') {
+if (__DEV__) {
   app.enable('trust proxy');
 }
 
@@ -116,6 +118,17 @@ app.get('/login/facebook/return',
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
+    const store = configureStore({
+      user: req.user || null,
+    }, {
+      cookie: req.headers.cookie,
+    });
+
+    store.dispatch(setRuntimeVariable({
+      name: 'initialNow',
+      value: Date.now(),
+    }));
+
     const css = new Set();
 
     // Global (context) variables that can be easily accessed from any React component
@@ -127,17 +140,16 @@ app.get('*', async (req, res, next) => {
         // eslint-disable-next-line no-underscore-dangle
         styles.forEach(style => css.add(style._getCss()));
       },
-      user: req.user,
+      // Initialize a new Redux store
+      // http://redux.js.org/docs/basics/UsageWithReact.html
+      store,
     };
 
-    const routeContext = {
+    const route = await UniversalRouter.resolve(routes, {
+      ...context,
       path: req.path,
       query: req.query,
-    };
-
-    if (req.user) { routeContext.user = req.user; }
-
-    const route = await UniversalRouter.resolve(routes, routeContext);
+    });
 
     if (route.redirect) {
       res.redirect(route.status || 302, route.redirect);
@@ -146,11 +158,14 @@ app.get('*', async (req, res, next) => {
 
     const data = { ...route };
     data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
-    data.style = [...css].join('');
+    data.styles = [
+      { id: 'css', cssText: [...css].join('') },
+    ];
     data.scripts = [
       assets.vendor.js,
       assets.client.js,
     ];
+    data.state = context.store.getState();
     if (assets[route.chunk]) {
       data.scripts.push(assets[route.chunk].js);
     }
@@ -176,7 +191,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     <Html
       title="Internal Server Error"
       description={err.message}
-      style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
+      styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
     >
       {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
     </Html>,
