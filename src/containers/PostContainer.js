@@ -18,22 +18,20 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onDrop: (files) => {
-      dispatch(addFiles(files));
-    },
-    onImageCloseButtonClick: (index) => {
-      dispatch(removeFile(index));
-    },
-    handleTagsChange: (tags) => {
-      dispatch(setTags(tags));
-    },
-    handleLinkChange: (link) => {
-      dispatch(setLink(link));
-    },
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onDrop: (files) => {
+    dispatch(addFiles(files));
+  },
+  onImageCloseButtonClick: (index) => {
+    dispatch(removeFile(index));
+  },
+  handleTagsChange: (tags) => {
+    dispatch(setTags(tags));
+  },
+  handleLinkChange: (link) => {
+    dispatch(setLink(link));
+  },
+});
 
 const PostContainer = connect(
   mapStateToProps,

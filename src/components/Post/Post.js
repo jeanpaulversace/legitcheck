@@ -66,7 +66,7 @@ class Post extends React.Component {
   // render
   render() {
     const link = this.props.link;
-    let validationState = link.match(validationRegex) ? "success" : "error";
+    let validationState = link.match(validationRegex) ? 'success' : 'error';
     if (link === '') { validationState = null; }
     const images = [];
     const files = this.props.files;
@@ -78,8 +78,8 @@ class Post extends React.Component {
           <Col sm={4} md={4}>
             <PostImage src={files[i].preview} onImageCloseButtonClick={() => this.props.onImageCloseButtonClick(i)} />
           </Col>
-          { i - 1 >= 0 && <Col sm={4} md={4}><PostImage src={files[i - 1].preview} onImageCloseButtonClick={() => this.props.onImageCloseButtonClick(i-1)} /></Col> }
-          { i - 2 >= 0 && <Col sm={4} md={4}><PostImage src={files[i - 2].preview} onImageCloseButtonClick={() => this.props.onImageCloseButtonClick(i-2)} /></Col> }
+          { i - 1 >= 0 && <Col sm={4} md={4}><PostImage src={files[i - 1].preview} onImageCloseButtonClick={() => this.props.onImageCloseButtonClick(i - 1)} /></Col> }
+          { i - 2 >= 0 && <Col sm={4} md={4}><PostImage src={files[i - 2].preview} onImageCloseButtonClick={() => this.props.onImageCloseButtonClick(i - 2)} /></Col> }
         </Row>,
       );
     }

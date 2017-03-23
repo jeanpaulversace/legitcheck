@@ -14,30 +14,22 @@ import {
   CREATE_POST_FAILURE,
 } from '../constants';
 
-export const addFiles = (files) => {
-  return {
-    type: ADD_FILES,
-    files,
-  };
-};
+export const addFiles = (files) => ({
+  type: ADD_FILES,
+  files,
+});
 
-export const removeFile = (file) => {
-  return {
-    type: REMOVE_FILE,
-    file,
-  };
-};
+export const removeFile = (file) => ({
+  type: REMOVE_FILE,
+  file,
+});
 
-export const setTags = (tags) => {
-  return {
-    type: SET_TAGS,
-    tags,
-  };
-};
+export const setTags = (tags) => ({
+  type: SET_TAGS,
+  tags,
+});
 
-export const setLink = (link) => {
-  return {
-    type: SET_LINK,
-    link,
-  };
-};
+export const setLink = (link) => ({
+  type: SET_LINK,
+  link,
+});
