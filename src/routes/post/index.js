@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
-import Post from './Post';
+import PostContainer from '../../containers/PostContainer';
 
 const title = 'Check Your Item';
 
@@ -11,7 +11,7 @@ export default {
   action() {
     return {
       title,
-      component: <Layout><Post title={title} /></Layout>,
+      component: <Layout><PostContainer /></Layout>,
     };
   },
 

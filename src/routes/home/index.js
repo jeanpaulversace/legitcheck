@@ -16,11 +16,8 @@ export default {
 
   path: '/',
 
-  async action({ user }) {
-    console.log('User from Home index.js: ', user);
-    console.log(typeof user);
-    if (!user) {
-      console.log('Redirecting HAHA!');
+  async action({ store }) {
+    if (!store.getState().user) {
       return { redirect: '/login' };
     }
 

@@ -51,7 +51,6 @@ class Html extends React.Component {
             />,
           )}
           <link rel="stylesheet" href="/css/bootstrap.min.css" />
-          {style && <style id="css" dangerouslySetInnerHTML={{ __html: style }} />}
           <script src="https://use.fontawesome.com/59d959ae39.js" />
         </head>
         <body>

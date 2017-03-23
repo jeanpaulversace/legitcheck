@@ -120,6 +120,11 @@ app.get('*', async (req, res, next) => {
   try {
     const store = configureStore({
       user: req.user || null,
+      post: {
+        files: [],
+        tags: [],
+        link: '',
+      },
     }, {
       cookie: req.headers.cookie,
     });

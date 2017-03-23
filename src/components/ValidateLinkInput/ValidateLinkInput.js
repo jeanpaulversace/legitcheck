@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import {
   FormGroup,
-  ControlLabel,
   FormControl,
-  HelpBlock,
 } from 'react-bootstrap';
 
-function ValidateLinkInput({ id, validationState, onLinkChange, help, ...props }) {
+function ValidateLinkInput({ id, validationState, handleLinkChange, ...props }) {
   return (
     <FormGroup controlId={id} validationState={validationState}>
-      <FormControl onChange={onLinkChange} {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
+      <FormControl onChange={handleLinkChange} {...props} />
     </FormGroup>
   );
 }
+
+ValidateLinkInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  handleLinkChange: PropTypes.func.isRequired,
+};
 
 export default ValidateLinkInput;
