@@ -7,12 +7,12 @@ import {
   ProgressBar,
 } from 'react-bootstrap';
 
-function PostProgressModal({ show, progress, fileCount, ...props }) {
+function PostProgressModal({ show, progress, status, ...props }) {
   return (
     <Modal show={show}>
       <Modal.Body>
         <ProgressBar bsStyle="warning" now={progress} label={`${progress}%`} />
-        Uploading {fileCount} images...
+        {status}
       </Modal.Body>
     </Modal>
   );

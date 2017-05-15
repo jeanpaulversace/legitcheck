@@ -2,13 +2,14 @@ import {
   GraphQLList as ListType,
 } from 'graphql';
 
-import PostType from '../types/PostType';
-import Sequelize from '../sequelize';
+import PostType from '../types/output/PostType';
+import PostModel from '../models/Post';
+import UserModel from '../models/User';
 
 const feed = {
   type: new ListType(PostType),
   resolve(root, args) {
-    return Sequelize.models.post.findAll({ where: args });
+    return PostModel.findAll({ where: args, include: [UserModel] });
   },
 };
 

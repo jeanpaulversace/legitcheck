@@ -16,9 +16,14 @@ const PostType = new ObjectType({
   description: 'A post on the user\'s feed.',
   fields: {
     id: { type: new NonNull(ID) },
-    images: { type: new NonNull(new ListType(StringType)) },
+    imageURLs: { type: new NonNull(new ListType(StringType)) },
     link: { type: StringType },
-    user: { type: new NonNull(UserType) },
+    user: {
+      type: new NonNull(UserType),
+      resolve(post) {
+        return post.getUser();
+      },
+    },
     comments: {
       type: new ListType(CommentType),
       resolve(post) {

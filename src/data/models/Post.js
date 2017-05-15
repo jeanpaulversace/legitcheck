@@ -9,7 +9,7 @@ const Post = Model.define('Post', {
     primaryKey: true,
   },
 
-  images: {
+  imageURLs: {
     type: DataType.ARRAY(DataType.STRING),
   },
 

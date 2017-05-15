@@ -1,0 +1,6 @@
+{
+  "name": "LegitCheck",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LegitCheck.js"
+}

@@ -301,9 +301,23 @@ autoprefixer@^6.0.0, autoprefixer@^6.3.1, autoprefixer@^6.7.2:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.x, aws-sdk@^2.25.0:
+aws-sdk@2.x:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.28.0.tgz#0b7628c5d48820187332c5a30835945c41f84f46"
+  dependencies:
+    buffer "4.9.1"
+    crypto-browserify "1.0.9"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.1.5"
+    url "0.10.3"
+    uuid "3.0.0"
+    xml2js "0.4.15"
+    xmlbuilder "2.6.2"
+
+aws-sdk@^2.34.0:
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.34.0.tgz#bf96fb617aa0e1d8728760ca7f00d46d0d9c685c"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -433,7 +447,7 @@ babel-helper-call-delegate@^6.22.0:
     babel-traverse "^6.22.0"
     babel-types "^6.22.0"
 
-babel-helper-define-map@^6.23.0:
+babel-helper-define-map@^6.22.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-helper-define-map/-/babel-helper-define-map-6.23.0.tgz#1444f960c9691d69a2ced6a205315f8fd00804e7"
   dependencies:
@@ -487,7 +501,7 @@ babel-helper-is-react-class@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/babel-helper-is-react-class/-/babel-helper-is-react-class-1.0.0.tgz#ef6f3678b05c76dbdeedadead7af98c2724d8431"
 
-babel-helper-optimise-call-expression@^6.23.0:
+babel-helper-optimise-call-expression@^6.22.0, babel-helper-optimise-call-expression@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-helper-optimise-call-expression/-/babel-helper-optimise-call-expression-6.23.0.tgz#f3ee7eed355b4282138b33d02b78369e470622f5"
   dependencies:
@@ -512,7 +526,7 @@ babel-helper-remap-async-to-generator@^6.22.0:
     babel-traverse "^6.22.0"
     babel-types "^6.22.0"
 
-babel-helper-replace-supers@^6.22.0, babel-helper-replace-supers@^6.23.0:
+babel-helper-replace-supers@^6.22.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-helper-replace-supers/-/babel-helper-replace-supers-6.23.0.tgz#eeaf8ad9b58ec4337ca94223bacdca1f8d9b4bfd"
   dependencies:
@@ -539,7 +553,7 @@ babel-loader@^6.2.10:
     mkdirp "^0.5.1"
     object-assign "^4.0.1"
 
-babel-messages@^6.23.0:
+babel-messages@^6.22.0, babel-messages@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-messages/-/babel-messages-6.23.0.tgz#f3cdf4703858035b2a2951c6ec5edf6c62f2630e"
   dependencies:
@@ -706,7 +720,7 @@ babel-plugin-transform-es2015-literals@^6.22.0, babel-plugin-transform-es2015-li
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-es2015-modules-amd@^6.24.0:
+babel-plugin-transform-es2015-modules-amd@^6.22.0, babel-plugin-transform-es2015-modules-amd@^6.24.0:
   version "6.24.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-amd/-/babel-plugin-transform-es2015-modules-amd-6.24.0.tgz#a1911fb9b7ec7e05a43a63c5995007557bcf6a2e"
   dependencies:
@@ -722,7 +736,7 @@ babel-plugin-transform-es2015-modules-amd@^6.8.0:
     babel-runtime "^6.22.0"
     babel-template "^6.22.0"
 
-babel-plugin-transform-es2015-modules-commonjs@^6.24.0:
+babel-plugin-transform-es2015-modules-commonjs@^6.22.0, babel-plugin-transform-es2015-modules-commonjs@^6.24.0:
   version "6.24.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.24.0.tgz#e921aefb72c2cc26cb03d107626156413222134f"
   dependencies:
@@ -1352,14 +1366,7 @@ browserify-zlib@^0.1.4:
   dependencies:
     pako "~0.2.0"
 
-browserslist@^1.0.0, browserslist@^1.0.1, browserslist@^1.1.1, browserslist@^1.1.3, browserslist@^1.4.0, browserslist@^1.5.2:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-1.7.1.tgz#cc9bd193979a2a4b09fdb3df6003fefe48ccefe1"
-  dependencies:
-    caniuse-db "^1.0.30000617"
-    electron-to-chromium "^1.2.1"
-
-browserslist@^1.7.6:
+browserslist@^1.0.0, browserslist@^1.0.1, browserslist@^1.1.1, browserslist@^1.1.3, browserslist@^1.4.0, browserslist@^1.5.2, browserslist@^1.7.6:
   version "1.7.6"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-1.7.6.tgz#af98589ce6e7ab09618d29451faacb81220bd3ba"
   dependencies:
@@ -1467,11 +1474,7 @@ caniuse-api@^1.5.2:
     lodash.memoize "^4.1.0"
     lodash.uniq "^4.3.0"
 
-caniuse-db@^1.0.30000187, caniuse-db@^1.0.30000346:
-  version "1.0.30000622"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000622.tgz#9d9690b577384990a58e33ebb903a14da735e5fd"
-
-caniuse-db@^1.0.30000631, caniuse-db@^1.0.30000634:
+caniuse-db@^1.0.30000187, caniuse-db@^1.0.30000346, caniuse-db@^1.0.30000631, caniuse-db@^1.0.30000634:
   version "1.0.30000639"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000639.tgz#5982f70a54352adaf8901a772d2c68ca24f501aa"
 
@@ -3374,7 +3377,7 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.0.2"
 
-hash.js@^1.0.0, hash.js@^1.0.3:
+hash.js@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.0.3.tgz#1332ff00156c0a0ffdd8236013d07b77a0451573"
   dependencies:
@@ -3398,14 +3401,6 @@ history@^4.5.1:
     resolve-pathname "^2.0.0"
     value-equal "^0.2.0"
     warning "^3.0.0"
-
-hmac-drbg@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.0.tgz#3db471f45aae4a994a0688322171f51b8b91bee5"
-  dependencies:
-    hash.js "^1.0.3"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.1"
 
 hoek@2.x.x:
   version "2.16.3"
@@ -4367,7 +4362,7 @@ lodash.uniq@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.12.0, lodash@^4.2.0, lodash@^4.2.1:
+lodash@4.12.0, lodash@^4.2.0:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.12.0.tgz#2bd6dc46a040f59e686c972ed21d93dc59053258"
 
@@ -4379,7 +4374,7 @@ lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.14.1, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.14.1, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4556,10 +4551,6 @@ min-document@^2.19.0:
 minimalistic-assert@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.0.tgz#702be2dda6b37f4836bcb3f5db56641b64a1d3d3"
-
-minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
 
 minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3:
   version "3.0.3"
@@ -5530,7 +5521,7 @@ postcss-ordered-values@^2.1.0:
     postcss "^5.0.4"
     postcss-value-parser "^3.0.1"
 
-postcss-partial-import@2.1.0:
+postcss-partial-import@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/postcss-partial-import/-/postcss-partial-import-2.1.0.tgz#09edaf13d78f39ee4f2a62e0fef6193b003853f3"
   dependencies:
@@ -6420,11 +6411,11 @@ samsam@1.x, samsam@^1.1.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/samsam/-/samsam-1.2.1.tgz#edd39093a3184370cb859243b2bdf255e7d8ea67"
 
-sax@1.1.5:
+sax@1.1.5, sax@>=0.6.0:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.1.5.tgz#1da50a8d00cdecd59405659f5ff85349fe773743"
 
-sax@>=0.6.0, sax@~1.2.1:
+sax@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
 

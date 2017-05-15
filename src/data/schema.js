@@ -17,6 +17,13 @@ import news from './queries/news';
 import feed from './queries/feed';
 import search from './queries/search';
 
+import createPost from './mutations/createPost';
+import addComment from './mutations/addComment';
+import removeComment from './mutations/removeComment';
+import addCheck from './mutations/addCheck';
+import removeCheck from './mutations/removeCheck';
+import updateCheck from './mutations/updateCheck';
+
 const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
@@ -25,6 +32,17 @@ const schema = new Schema({
       news,
       feed,
       search,
+    },
+  }),
+  mutation: new ObjectType({
+    name: 'Mutation',
+    fields: {
+      createPost,
+      addComment,
+      removeComment,
+      addCheck,
+      removeCheck,
+      updateCheck,
     },
   }),
 });

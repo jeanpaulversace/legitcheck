@@ -1,32 +1,35 @@
-import AWS from 'aws-sdk';
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAJRBRXDEVWXFHMLGQ',
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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',
+export const getSignedRequest = (formattedFileName, file) => new Promise((res, rej) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/sign-s3?file-name=${formattedFileName}&file-type=${file.type}`);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('this is response.url:', response.url);
+        res({
+          signedRequest: response.signedRequest,
+          url: response.url,
+        });
+      } else {
+        rej('Error getting signed request!');
+      }
+    }
+  };
+  xhr.send();
 });
 
-function getUploadPreSignedUrl(key) {
-  return s3.getSignedUrl('putObject', {
-    Bucket: 'legitcheck',
-    Key: key,
-    ACL: 'authenticated-read',
-    // This must match with your ajax contentType parameter
-    ContentType: 'binary/octet-stream',
-    /* then add all the rest of your parameters to AWS puttObect here */
-  });
-}
-
-function getDownloadPreSignedUrl(key) {
-  return s3.getSignedUrl('getObject', {
-    Bucket: 'legitcheck',
-    Key: key,
-    /* set a fixed type, or calculate your mime type from the file extension */
-    ResponseContentType: 'image/*',
-    /* and all the rest of your parameters to AWS getObect here */
-  });
-}
-
-export default {
-  getUploadPreSignedUrl,
-  getDownloadPreSignedUrl,
-};
+export const uploadFile = (file, signedRequest, onProgress) => new Promise((res, rej) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      if (xhr.readyState === 4) {
+        return xhr.status === 200 ? res() : rej('Error uploading file!');
+      }
+    }
+  };
+  if (xhr.upload && onProgress) {
+    xhr.upload.onprogress = onProgress;
+  }
+  xhr.send(file);
+});

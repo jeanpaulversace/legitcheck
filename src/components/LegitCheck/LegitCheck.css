@@ -1,0 +1,106 @@
+@import '../../components/variables.css';
+
+.legitcheck {
+  margin: 15px 0;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+}
+
+.username {
+  color: #262626;
+}
+
+.username:hover {
+  text-decoration: none;
+}
+
+.numberOfChecks {
+  width: 25%;
+  margin: 25px 25px 0 25px;
+}
+
+.tagContainer {
+  margin: 15px 20px;
+}
+
+.tag {
+  margin: 2.5px;
+}
+
+.link {
+  margin: 15px 25px;
+}
+
+.link a {
+  color: #262626;
+}
+
+.link a:hover {
+  text-decoration: none;
+}
+
+.break {
+  margin: 0 15px;
+  border: 0.5px solid #e6e6e6;
+}
+
+.checkContainer {
+  margin: 5px 15px;
+}
+
+.commentContainer {
+  margin: 15px 25px;
+}
+
+.newComment {
+  margin: 0 15px 15px 15px;
+  width: 95%;
+  border: 0;
+  box-shadow: none;
+}
+
+.hiddenSubmit {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}
+
+.comment {
+  position: relative;
+}
+
+.comment:hover .commentDelete {
+  display: block;
+}
+
+.commentPosting {
+  color: #e6e6e6;
+}
+
+.commentDelete {
+  font-size: xlarge;
+  color: black;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 100;
+  display: none;
+}
+
+.checkGreen {
+  color: green;
+}
+
+.checkBlack {
+  color: black;
+}
+
+.xRed {
+  color: red;
+}
+
+.xBlack {
+  color: black;
+}

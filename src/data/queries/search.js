@@ -1,6 +1,6 @@
 import { GraphQLList as ListType } from 'graphql';
 
-import PostType from '../types/PostType';
+import PostType from '../types/output/PostType';
 import Sequelize from '../sequelize';
 
 const search = {

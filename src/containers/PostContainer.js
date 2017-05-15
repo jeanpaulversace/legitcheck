@@ -4,7 +4,9 @@ import {
   removeFile,
   setTags,
   setLink,
-} from '../actions/createPost';
+  uploadAWSImagesAndCreatePost,
+  handleAfterPost,
+} from '../actions/post/post';
 
 import Post from '../components/Post';
 
@@ -14,7 +16,7 @@ const mapStateToProps = (state) => {
     files: post.files,
     tags: post.tags,
     link: post.link,
-    // isPosting: state.isPosting
+    request: post.request,
   };
 };
 
@@ -30,6 +32,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleLinkChange: (link) => {
     dispatch(setLink(link));
+  },
+  uploadAWSImagesAndCreatePost: () => {
+    dispatch(uploadAWSImagesAndCreatePost()).then(() => dispatch(handleAfterPost()));
   },
 });
 

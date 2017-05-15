@@ -1,25 +1,13 @@
 import {
   GraphQLObjectType as ObjectType,
   GraphQLID as ID,
-  GraphQLString as StringType,
   GraphQLNonNull as NonNull,
-  GraphQLEnumType as EnumType,
 } from 'graphql';
 
 import UserType from './UserType';
+// import PostType from './PostType';
 
-const CheckVoteType = new EnumType({
-  name: 'CheckVote',
-  description: 'A custom GraphQLEnumType for Votes on the Check type',
-  values: {
-    UP: {
-      value: 'UP',
-    },
-    DOWN: {
-      value: 'DOWN',
-    },
-  },
-});
+import CheckVoteType from '../enum/CheckVoteType';
 
 const CheckType = new ObjectType({
   name: 'Check',
@@ -27,7 +15,12 @@ const CheckType = new ObjectType({
   fields: {
     id: { type: new NonNull(ID) },
     vote: { type: new NonNull(CheckVoteType) },
-    user: { type: new NonNull(UserType) },
+    user: {
+      type: new NonNull(UserType),
+      resolve(check) {
+        return check.getUser();
+      },
+    },
   },
 });
 

@@ -21,7 +21,7 @@ import {
 class Header extends React.Component {
   render() {
     return (
-      <Navbar>
+      <Navbar className={s.navbar}>
         <Navbar.Header>
           <Navbar.Brand>
             <Link className={s.brand} to="/"><img src={logo} width="200" height="25" alt="React" /></Link>

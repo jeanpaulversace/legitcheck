@@ -6,14 +6,20 @@ import {
 } from 'graphql';
 
 import UserType from './UserType';
+// import PostType from './PostType';
 
 const CommentType = new ObjectType({
   name: 'Comment',
-  description: 'Comment on a Post',
+  description: 'A Comment on a Post',
   fields: {
     id: { type: new NonNull(ID) },
     content: { type: new NonNull(StringType) },
-    user: { type: new NonNull(UserType) },
+    user: {
+      type: new NonNull(UserType),
+      resolve(comment) {
+        return comment.getUser();
+      },
+    },
   },
 });
 

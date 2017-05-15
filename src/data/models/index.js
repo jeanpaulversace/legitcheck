@@ -14,7 +14,7 @@ import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 import Activity from './Activity';
 import Check from './Check';
-import Comment from './Comment';
+import Comments from './Comment';
 import Post from './Post';
 import Tag from './Tag';
 
@@ -53,13 +53,13 @@ Activity.belongsTo(Post);
 
 Post.belongsTo(User);
 
-Post.hasMany(Comment);
+Post.hasMany(Comments);
 
 Post.hasMany(Check);
 
 Check.belongsTo(User);
 
-Comment.belongsTo(User);
+Comments.belongsTo(User);
 
 Tag.belongsToMany(Post, { through: 'PostTags' });
 Post.belongsToMany(Tag, { through: 'PostTags' });

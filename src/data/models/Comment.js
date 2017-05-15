@@ -1,7 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Comment = Model.define('Comment', {
+const Comments = Model.define('Comment', {
 
   id: {
     type: DataType.UUID,
@@ -15,4 +15,4 @@ const Comment = Model.define('Comment', {
 
 });
 
-export default Comment;
+export default Comments;

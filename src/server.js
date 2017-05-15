@@ -6,6 +6,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
+require('dotenv').config();
 
 import 'babel-polyfill';
 import path from 'path';
@@ -31,6 +32,7 @@ import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import { port, auth } from './config';
+import aws from 'aws-sdk';
 
 const app = express();
 
@@ -103,15 +105,45 @@ app.get('/login/facebook/return',
   },
 );
 
+app.get('/sign-s3', (req, res) => {
+  aws.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
+
+  const s3 = new aws.S3();
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: 'jeanpaulversace-legitcheck',
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read',
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if (err) {
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://jeanpaulversace-legitcheck.s3.amazonaws.com/${fileName}`,
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
+
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-// app.use('/graphql', expressGraphQL(req => ({
-//   schema,
-//   graphiql: process.env.NODE_ENV !== 'production',
-//   rootValue: { request: req },
-//   pretty: process.env.NODE_ENV !== 'production',
-// })));
+app.use('/graphql', expressGraphQL(req => ({
+  schema,
+  graphiql: process.env.NODE_ENV !== 'production',
+  rootValue: { request: req },
+  pretty: process.env.NODE_ENV !== 'production',
+})));
 
 //
 // Register server-side rendering middleware
@@ -120,10 +152,30 @@ app.get('*', async (req, res, next) => {
   try {
     const store = configureStore({
       user: req.user || null,
+      feed: {
+        posts: [],
+        isRequesting: false,
+        error: '',
+      },
       post: {
         files: [],
         tags: [],
         link: '',
+        request: {
+          isPosting: false,
+          status: '',
+          success: '',
+          aws: {
+            isPosting: false,
+            progress: 0,
+            imageURLs: [],
+            error: '',
+          },
+          graphql: {
+            isPosting: false,
+            error: '',
+          },
+        },
       },
     }, {
       cookie: req.headers.cookie,

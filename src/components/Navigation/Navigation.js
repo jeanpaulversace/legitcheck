@@ -8,6 +8,7 @@
  */
 
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -39,13 +40,27 @@ class Navigation extends React.Component {
       </Nav>
     );
 
-    // { this.context.user ? <LoggedInNavigation /> : <LoggedOutNavigation /> }
     return (
       <div>
-        <LoggedOutNavigation />
+        { this.props.user ? <LoggedInNavigation /> : <LoggedOutNavigation /> }
       </div>
     );
   }
 }
 
-export default withStyles(s)(Navigation);
+Navigation.propTypes = {
+  user: PropTypes.object,
+};
+
+const mapStateToProps = (state) => {
+  const { user } = state;
+  return {
+    user,
+  };
+};
+
+const NavigationContainer = connect(
+  mapStateToProps,
+)(withStyles(s)(Navigation));
+
+export default NavigationContainer;

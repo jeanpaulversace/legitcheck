@@ -14,9 +14,9 @@ import {
 import Dropzone from 'react-dropzone';
 import TagsInput from 'react-tagsinput';
 
-import ValidateLinkInput from '../../components/ValidateLinkInput';
-import PostImage from '../../components/PostImage';
-import PostProgressModal from '../../components/PostProgressModal';
+import ValidateLinkInput from '../ValidateLinkInput';
+import PostImage from '../PostImage';
+import PostProgressModal from '../PostProgressModal';
 
 const validationRegex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi);
 
@@ -28,12 +28,22 @@ class Post extends React.Component {
       filesMessage: '',
       tagsMessage: '',
       linkMessage: '',
+      isLinkValid: null,
     };
   }
 
   // react-dropzone
   onOpenClick = () => {
     this.dropzone.open();
+  }
+
+  // change events
+  handleLinkChange = (evt) => {
+    const link = evt.currentTarget.value;
+    let isLinkValid = link.match(validationRegex) ? 'success' : 'error';
+    if (link === '') { isLinkValid = null; }
+    this.setState({ isLinkValid });
+    this.props.handleLinkChange(link);
   }
 
   // submit handlers
@@ -60,19 +70,18 @@ class Post extends React.Component {
   }
 
   handlePost = (evt) => {
-
+    evt.preventDefault();
+    this.props.uploadAWSImagesAndCreatePost();
   }
 
   // render
   render() {
-    const link = this.props.link;
-    let validationState = link.match(validationRegex) ? 'success' : 'error';
-    if (link === '') { validationState = null; }
     const images = [];
     const files = this.props.files;
     const tags = this.props.tags;
-    const handleSubmit = (files.length > 0 && tags.length > 0 && (this.state.linkValidationState === 'success' || !this.state.linkValidationState)) ? this.handlePost : this.handleEmptySubmit;
-    for (let i = files.length - 1; i >= 0; i -= 3) {
+    const handleSubmit = (files.length > 0 && tags.length > 0 && (this.state.isLinkValid === 'success' || !this.state.isLinkValid)) ? this.handlePost : this.handleBadSubmit;
+    const inverse = files.length - 1;
+    for (let i = inverse; i >= 0; i -= 3) {
       images.push(
         <Row key={i} className={s.row}>
           <Col sm={4} md={4}>
@@ -83,13 +92,15 @@ class Post extends React.Component {
         </Row>,
       );
     }
-    // <PostProgressModal show={this.state.showModal} progress={this.state.progress} fileCount={files.length} />
     return (
       <div>
+        <PostProgressModal show={this.props.request.isPosting || this.props.request.aws.isPosting || this.props.request.graphql.isPosting} progress={this.props.request.aws.progress || 100} status={this.props.request.status} />
         <Grid>
           <Row>
             <Col sm={3} md={3} />
             <Col sm={6} md={6}>
+              { this.props.request.aws.error && <Alert bsStyle="danger">{this.props.request.aws.error}</Alert> }
+              { this.props.request.graphql.error && <Alert bsStyle="danger">{this.props.request.graphql.error}</Alert> }
               <PageHeader className={s.pageHeader}>Is It Real Or Fake?</PageHeader>
               { this.state.filesMessage && <Alert bsStyle="danger">{this.state.filesMessage}</Alert> }
               <h3>Photos <small>- upload high-quality, tagged pictures</small></h3>
@@ -113,8 +124,8 @@ class Post extends React.Component {
                     type="text"
                     name="link"
                     placeholder="e.g. https://www.grailed.com/mygrails/7602"
-                    validationState={validationState}
-                    handleLinkChange={(evt) => { this.props.handleLinkChange(evt.currentTarget.value); }}
+                    validationState={this.state.isLinkValid}
+                    handleLinkChange={this.handleLinkChange}
                   />
                 </div>
                 <div className={s.submit}>
@@ -136,11 +147,12 @@ Post.propTypes = {
   files: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   link: PropTypes.string.isRequired,
-  // isPosting: PropTypes.bool.isRequired,
+  request: PropTypes.object.isRequired,
   onDrop: PropTypes.func.isRequired,
   onImageCloseButtonClick: PropTypes.func.isRequired,
   handleTagsChange: PropTypes.func.isRequired,
   handleLinkChange: PropTypes.func.isRequired,
+  uploadAWSImagesAndCreatePost: PropTypes.func.isRequired,
 };
 
 export default withStyles(s)(Post);
