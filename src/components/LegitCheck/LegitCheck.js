@@ -99,7 +99,7 @@ class LegitCheck extends React.Component {
     return (
       <div className={s.legitcheck}>
         <div className={s.creator}>
-          <Image className={s.profilePicture} src={ post.user.profile.picture || hobbes } circle />
+          <Image className={s.profilePicture} src={post.user.profile.picture || hobbes} circle />
           <Button className={s.username} bsStyle="link"><h4>{post.user.email}</h4></Button>
         </div>
         <Carousel dragging>
