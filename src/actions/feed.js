@@ -22,6 +22,9 @@ export const getFeed = () => async (dispatch) => {
         user {
           id,
           email,
+          profile {
+            picture
+          }
         },
         comments {
           id,

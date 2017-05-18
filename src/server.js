@@ -6,8 +6,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
-require('dotenv').config();
-
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
@@ -65,16 +63,6 @@ if (__DEV__) {
   app.enable('trust proxy');
 }
 
-// Local Log in / Sign up routes
-// app.post('/login',
-//   passport.authenticate('local', { failureRedirect: '/login', session: false }),
-//   (req, res) => {
-//     const expiresIn = 60 * 60 * 24 * 180; // 180 days
-//     const token = jwt.sign(req.user, auth.jwt.secret, { expiresIn });
-//     res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-//     res.redirect('/');
-//   },
-// );
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) { return next(err); }
@@ -115,7 +103,7 @@ app.get('/sign-s3', (req, res) => {
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
   const s3Params = {
-    Bucket: 'jeanpaulversace-legitcheck',
+    Bucket: 'legitcheck',
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
@@ -128,7 +116,7 @@ app.get('/sign-s3', (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://jeanpaulversace-legitcheck.s3.amazonaws.com/${fileName}`,
+      url: `https://legitcheck.s3.amazonaws.com/${fileName}`,
     };
     res.write(JSON.stringify(returnData));
     res.end();

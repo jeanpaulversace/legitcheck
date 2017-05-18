@@ -43,6 +43,7 @@ export default () => async (dispatch, getState) => {
     // update progress callback
   function onProgress(url) {
     return (event) => {
+      console.log("This is the event: ", event);
       const currentProgress = fileNameProgress[url];
       if (currentProgress.total === 0) currentProgress.total = event.total;
       currentProgress.loaded = event.loaded;

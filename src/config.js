@@ -8,6 +8,13 @@
  */
 
 /* eslint-disable max-len */
+import dotenv from 'dotenv';
+import fs from 'fs';
+
+//
+// Load environment variables from .env
+// ----------------------------------------------------------------------------
+if (fs.existsSync('.env')) dotenv.load();
 
 export const port = process.env.PORT || 3000;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;

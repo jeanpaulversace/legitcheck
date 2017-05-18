@@ -9,10 +9,15 @@ import {
 } from 'react-bootstrap';
 
 import LegitCheck from '../LegitCheck';
+import history from '../../core/history';
 
 class Feed extends React.Component {
 
   componentDidMount() {
+    if (!this.props.user) {
+      history.push('/login');
+      return;
+    }
     this.props.getFeed();
   }
 

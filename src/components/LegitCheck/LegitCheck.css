@@ -1,10 +1,20 @@
 @import '../../components/variables.css';
 
 .legitcheck {
-  margin: 15px 0;
+  margin: 25px 0;
   background-color: white;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
+}
+
+.creator {
+  margin: 0 15px;
+}
+
+.profilePicture {
+  max-width: 30px;
+  max-height: 30px;
+  background-size: contain;
 }
 
 .username {
@@ -15,9 +25,15 @@
   text-decoration: none;
 }
 
+.postImage {
+  background-size: contain;
+  display: block;
+  margin: auto;
+}
+
 .numberOfChecks {
   width: 25%;
-  margin: 25px 25px 0 25px;
+  margin: 25px 25px 0;
 }
 
 .tagContainer {
@@ -54,7 +70,7 @@
 }
 
 .newComment {
-  margin: 0 15px 15px 15px;
+  margin: 0 15px 15px;
   width: 95%;
   border: 0;
   box-shadow: none;

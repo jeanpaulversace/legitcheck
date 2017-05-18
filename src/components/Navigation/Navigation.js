@@ -22,20 +22,19 @@ import {
   MenuItem,
 } from 'react-bootstrap';
 
+// <NavItem componentClass={Link} to="/activity"><FontAwesome style={{ color: 'black' }} name="bell" /></NavItem>
+// <NavItem componentClass={Link} eventKey={1} href="/login" to="/login"><FontAwesome style={{ color: 'black' }} name="user" /></NavItem>
+
 class Navigation extends React.Component {
   render() {
     const LoggedInNavigation = () => (
       <Nav pullRight>
-        <NavItem componentClass={Link} to="/post"><FontAwesome style={{ color: 'black' }} name="plus" /></NavItem>
-        <NavItem componentClass={Link} to="/activity"><FontAwesome style={{ color: 'black' }} name="bell" /></NavItem>
-        <NavItem componentClass={Link} eventKey={1} href="/login" to="/login"><FontAwesome style={{ color: 'black' }} name="user" /></NavItem>
+        <NavItem componentClass={Link} eventKey={1} href="/post" to="/post"><FontAwesome style={{ color: 'black' }} name="plus" /></NavItem>
       </Nav>
     );
 
     const LoggedOutNavigation = () => (
       <Nav pullRight>
-        <NavItem componentClass={Link} to="/about">About</NavItem>
-        <NavItem componentClass={Link} to="/contact">Contact</NavItem>
         <NavItem componentClass={Link} href="/login" to="/login">Login / Register</NavItem>
       </Nav>
     );

@@ -15,6 +15,8 @@ import {
 
 import Carousel from 'nuka-carousel';
 
+const hobbes = require('../../images/hobbes.png');
+
 class LegitCheck extends React.Component {
 
   constructor(props) {
@@ -33,6 +35,8 @@ class LegitCheck extends React.Component {
   handleCheckClick = (vote) => {
     const post = this.props.post;
     const check = post.checks.find((chck) => chck.user.id === this.props.user.id);
+    console.log(check);
+    console.log(vote);
 
     if (check) {
       if (check.vote === vote) {
@@ -82,22 +86,25 @@ class LegitCheck extends React.Component {
 
   render() {
     const post = this.props.post;
-    const percentage = Math.round(post.checks.map((current, total) => total + (current.vote === 'UP' ? 1 : 0), 0) / post.checks.length * 100) || 0;
+    const percentage = Math.round(post.checks.reduce((total, current) => total + (current.vote === 'UP' ? 1 : 0), 0) / post.checks.length * 100) || 0;
     let userCheck = '';
     for (const i = 0; i < post.checks.length; i++) {
       const check = post.checks[i];
-      if (check.vote === 'UP') userCheck = 'UP';
-      if (check.vote === 'DOWN') userCheck = 'DOWN';
+      if (check.vote === 'UP' && check.user.id === this.props.user.id) userCheck = 'UP';
+      if (check.vote === 'DOWN' && check.user.id === this.props.user.id) userCheck = 'DOWN';
     }
     const numberOfChecksTooltip = (
       <Tooltip id={post.id}><strong>{post.checks.length}</strong> checks</Tooltip>
     );
     return (
       <div className={s.legitcheck}>
-        <Button className={s.username} bsStyle="link"><h4>{post.user.email}</h4></Button>
+        <div className={s.creator}>
+          <Image className={s.profilePicture} src={ post.user.profile.picture || hobbes } circle />
+          <Button className={s.username} bsStyle="link"><h4>{post.user.email}</h4></Button>
+        </div>
         <Carousel dragging>
           {post.imageURLs.map((imageURL, index) =>
-            <Image key={index} src={imageURL} onLoad={() => { window.dispatchEvent(new Event('resize')); }} responsive />,
+            <Image className={s.postImage} key={index} src={imageURL} onLoad={() => { window.dispatchEvent(new Event('resize')); }} responsive />,
           )}
         </Carousel>
         <OverlayTrigger placement="top" overlay={numberOfChecksTooltip}>
