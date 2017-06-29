@@ -43,7 +43,6 @@ export default () => async (dispatch, getState) => {
     // update progress callback
   function onProgress(url) {
     return (event) => {
-      console.log('This is the event: ', event);
       const currentProgress = fileNameProgress[url];
       if (currentProgress.total === 0) currentProgress.total = event.total;
       currentProgress.loaded = event.loaded;
@@ -72,7 +71,6 @@ export default () => async (dispatch, getState) => {
   }
 
   return Promise.all(imageUploadPromises).then(() => {
-    console.log(fileNameProgress);
     dispatch({
       type: POST_AWS_SUCCESS,
       payload: {

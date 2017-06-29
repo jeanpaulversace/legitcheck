@@ -193,7 +193,6 @@ export const updateCheck = (params) => async (dispatch, getStore) => {
       credentials: 'include',
     });
     const { data } = await resp.json();
-    console.log(data);
     if (!data || !data.updateCheck) {
       throw 'Error occured updating check!';
     } else {

@@ -5,7 +5,6 @@ export const getSignedRequest = (formattedFileName, file) => new Promise((res, r
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
-        console.log('this is response.url:', response.url);
         res({
           signedRequest: response.signedRequest,
           url: response.url,

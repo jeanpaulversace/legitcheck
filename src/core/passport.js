@@ -37,16 +37,13 @@ passport.use(new LocalStrategy({
 
       // Log in User if correct password
       if (user) {
-        console.log('Check if passwords match!');
         bcrypt.compare(password, user.hash, (err, res) => {
           if (res == true) {
-            console.log('User about to sign-in!');
             done(null, {
               id: user.id,
               email: user.email,
             });
           } else {
-            console.log('Incorrect password!');
             done(null, false, { message: 'wrong password' });
           }
         });
