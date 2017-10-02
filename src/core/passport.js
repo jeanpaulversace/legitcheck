@@ -110,7 +110,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new FacebookStrategy({
   clientID: config.facebook.id,
   clientSecret: config.facebook.secret,
-  callbackURL: 'https://legitcheck.herokuapp.com/login/facebook/return',
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL || '/login/facebook/return',
   profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
