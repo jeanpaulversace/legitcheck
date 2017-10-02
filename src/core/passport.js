@@ -38,7 +38,7 @@ passport.use(new LocalStrategy({
       // Log in User if correct password
       if (user) {
         bcrypt.compare(password, user.hash, (err, res) => {
-          if (res == true) {
+          if (res === true) {
             done(null, {
               id: user.id,
               email: user.email,
@@ -110,7 +110,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new FacebookStrategy({
   clientID: config.facebook.id,
   clientSecret: config.facebook.secret,
-  callbackURL: 'https://legitcheck.herokuapp.com/login/facebook/return',
+  callbackURL: '/login/facebook/return',
   profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
